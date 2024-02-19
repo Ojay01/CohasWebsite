@@ -10,11 +10,13 @@
 <?php
 $school_id = school_id();
 $marks = $this->crud_model->get_marks($class_id, $section_id, $subject_id, $exam_id)->result_array();
+$count = 1; 
 ?>
 <?php if (count($marks) > 0): ?>
-    <table class="table table-bordered table-responsive-sm" width="100%">
+    <table id="marks-table" class="table table-bordered table-responsive-sm" width="100%">
         <thead class="thead-dark">
             <tr>
+            <th><?php echo get_phrase('S/N'); ?></th>
                 <th><?php echo get_phrase('student_name'); ?></td>
                 <th><?php echo get_phrase('mark'); ?></td>
                 
@@ -24,14 +26,16 @@ $marks = $this->crud_model->get_marks($class_id, $section_id, $subject_id, $exam
         <?php foreach($marks as $mark):
                 $student = $this->db->get_where('students', array('id' => $mark['student_id']))->row_array(); ?>
                 <tr>
+                <td><?php echo $count++; ?></td> 
                     <td><?php echo $this->user_model->get_user_details($student['user_id'], 'name'); ?></td>
-                    <td><input class="form-control" type="number" id="mark-<?php echo $mark['student_id']; ?>" name="mark" placeholder="mark" min="0" value="<?php echo $mark['mark_obtained']; ?>" required onchange="get_grade(this.value, this.id)"></td>
+                    <td><?php echo $mark['mark_obtained']; ?> </td>
                 </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
     <div class="text-center">
-        <button class="btn btn-success" onclick="submit_marks()"><?php echo get_phrase('submit'); ?></button>
+       
+        <button class="btn btn-primary" onclick="exportToExcel()">Export to Excel</button>
     </div>
 <?php else: ?>
 <?php include APPPATH.'views/backend/empty.php'; ?>
@@ -76,3 +80,47 @@ $marks = $this->crud_model->get_marks($class_id, $section_id, $subject_id, $exam
         });
     }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    function exportToExcel() {
+        /* Table to Excel */
+        var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+        tab_text = tab_text + '<x:Name>Worksheet</x:Name>';
+        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        tab_text = tab_text + "<table border='1px'>";
+        var table = document.getElementById('marks-table');
+
+        // Create a new Excel workbook
+        var wb = XLSX.utils.book_new();
+
+        // Convert the table to a worksheet
+        var ws = XLSX.utils.table_to_sheet(table);
+
+        
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'Worksheet');
+
+        // Save the workbook as a binary Excel file
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+         var className = "<?php echo $this->db->get_where('classes', array('id' => $class_id))->row('name'); ?>";
+        var sectionName = "<?php echo $this->db->get_where('sections', array('id' => $section_id))->row('name'); ?>";
+        var subjectName = "<?php echo $this->db->get_where('subjects', array('id' => $subject_id))->row('name'); ?>";
+        var fileName = className + '_' + sectionName + '_' + subjectName + '_marks.xlsx';
+
+        saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), fileName);
+    }
+
+    // Function to convert string to ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+</script>
+

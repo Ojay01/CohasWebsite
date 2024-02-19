@@ -38,7 +38,7 @@ $check_permission = has_permission($class_id, $section_id, 'marks', $subject_id)
                 $current_date = strtotime(date('Y-m-d')); // Get current date without time
                 $readonly = $exam_ending_date < $current_date ? 'readonly' : ''; // Check if exam ending date has passed
               ?>
-              <input class="form-control" type="number" id="mark-<?php echo $mark['student_id']; ?>" name="mark" placeholder="mark" min="0" value="<?php echo $mark['mark_obtained']; ?>" required onchange="get_grade(this.value, this.id)" <?php echo $readonly; ?>>
+              <input class="form-control" type="number" id="mark-<?php echo $mark['student_id']; ?>" max="20" name="mark" placeholder="mark" min="0" value="<?php echo $mark['mark_obtained']; ?>" required onchange="get_grade(this.value, this.id)" <?php echo $readonly; ?>>
             </td>
                       
                     </tr>

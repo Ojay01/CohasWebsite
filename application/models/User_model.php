@@ -249,31 +249,38 @@ class User_model extends CI_Model {
 	//END TEACHER section
 
 
-	//START TEACHER PERMISSION section
-		public function teacher_permission(){
-		$class_id = html_escape($this->input->post('class_id'));
-		$section_id = html_escape($this->input->post('section_id'));
-		$teacher_id = html_escape($this->input->post('teacher_id'));
-		$column_name = html_escape($this->input->post('column_name'));
-		$value = html_escape($this->input->post('value'));
+	// //START TEACHER PERMISSION section
+	// 	public function teacher_permission(){
+	// 	$class_id = html_escape($this->input->post('class_id'));
+	// 	$section_id = html_escape($this->input->post('section_id'));
+	// 	$teacher_id = html_escape($this->input->post('teacher_id'));
+	// 	$column_name = html_escape($this->input->post('column_name'));
+	// 	$value = html_escape($this->input->post('value'));
 
-		$check_row = $this->db->get_where('teacher_permissions', array('class_id' => $class_id, 'section_id' => $section_id, 'teacher_id' => $teacher_id));
-		if($check_row->num_rows() > 0){
-			$data[$column_name] = $value;
-			$this->db->where('class_id', $class_id);
-			$this->db->where('section_id', $section_id);
-			$this->db->where('teacher_id', $teacher_id);
-			$this->db->update('teacher_permissions', $data);
+    //     // Debug: Print input values
+    // echo "Class ID: " . $class_id . "<br>";
+    // echo "Section ID: " . $section_id . "<br>";
+    // echo "Teacher ID: " . $teacher_id . "<br>";
+    // echo "Column Name: " . $column_name . "<br>";
+    // echo "Value: " . $value . "<br>";
+
+	// 	$check_row = $this->db->get_where('teacher_permissions', array('class_id' => $class_id, 'section_id' => $section_id, 'teacher_id' => $teacher_id));
+	// 	if($check_row->num_rows() > 0){
+	// 		$data[$column_name] = $value;
+	// 		$this->db->where('class_id', $class_id);
+	// 		$this->db->where('section_id', $section_id);
+	// 		$this->db->where('teacher_id', $teacher_id);
+	// 		$this->db->update('teacher_permissions', $data);
             
-		}else{
-			$data['class_id'] = $class_id;
-			$data['section_id'] = $section_id;
-			$data['teacher_id'] = $teacher_id;
-			$data[$column_name] = 1;
-			$this->db->insert('teacher_permissions', $data);
-		}
-	}
-	//END TEACHER PERMISSION section
+	// 	}else{
+	// 		$data['class_id'] = $class_id;
+	// 		$data['section_id'] = $section_id;
+	// 		$data['teacher_id'] = $teacher_id;
+	// 		$data[$column_name] = 1;
+	// 		$this->db->insert('teacher_permissions', $data);
+	// 	}
+	// }
+	// //END TEACHER PERMISSION section
 
 	//START PARENT section
 	public function parent_create()

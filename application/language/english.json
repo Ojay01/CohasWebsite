@@ -1276,5 +1276,6 @@
     "assign": "Assign",
     "exam_updated_successfully": "Exam updated successfully",
     "grade_updated_successfully": "Grade updated successfully",
-    "session_has_been_updated_successfully": "Session has been updated successfully"
+    "session_has_been_updated_successfully": "Session has been updated successfully",
+    "s/n": "S/n"
 }
