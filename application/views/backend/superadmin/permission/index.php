@@ -16,7 +16,7 @@
         <div class="card">
             <div class="row mt-3">
                 <div class="col-md-1"></div>
-                <div class="col-md-4">
+                <div class="col-md-2 mb-1">
                     <select name="class" id="class_id" class="form-control select2" data-toggle = "select2" onchange="classWiseSection(this.value)" required>
                         <option value=""><?php echo get_phrase('select_a_class'); ?></option>
                             <?php
@@ -34,9 +34,14 @@
                             <?php } ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2 mb-1">
                     <select name="section" id="section_id" class="form-control select2" data-toggle = "select2"  required>
                         <option value=""><?php echo get_phrase('select_a_section'); ?></option>
+                    </select>
+                </div>
+                 <div class="col-md-2 mb-1">
+                    <select name="subject" id="subject_id" class="form-control select2" data-toggle = "select2" required>
+                        <option value=""><?php echo get_phrase('select_subject'); ?></option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -61,20 +66,36 @@
     });
 
     function classWiseSection(classId) {
-        $.ajax({
-            url: "<?php echo route('section/list/'); ?>"+classId,
-            success: function(response){
-                $('#section_id').html(response);
-            }
-        });
-    }
+    $.ajax({
+        url: "<?php echo route('section/list/'); ?>"+classId,
+        success: function(response){
+            $('#section_id').html(response);
+            classWiseSubject(classId);
+        }
+    });
+}
 
+function classWiseSubject(classId) {
+    $.ajax({
+        url: "<?php echo route('class_wise_subject/'); ?>"+classId,
+        success: function(response){
+            $('#subject_id').html(response);
+        }
+    });
+}
     function filter(){
         var class_id = $('#class_id').val();
         var section_id = $('#section_id').val();
-        if(class_id != "" && section_id!= ""){
+        var subject_id = $('#subject_id').val();
+    
+    // Display selected IDs
+    $('#selected_class_id').text(class_id);
+    $('#selected_section_id').text(section_id);
+    $('#selected_subject_id').text(subject_id);
+
+        if(class_id != "" && section_id!= "" && subject_id!= ""){
             $.ajax({
-                url: '<?php echo route('permission/filter/') ?>'+class_id+'/'+section_id,
+                url: '<?php echo route('permission/filter/') ?>'+class_id+'/'+section_id+'/'+subject_id,
                 success: function(response){
                     $('.permission_content').html(response);
                 }

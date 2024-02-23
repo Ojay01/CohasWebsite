@@ -251,21 +251,12 @@ class User_model extends CI_Model {
 
 	//START TEACHER PERMISSION section
 		public function teacher_permission(){
-		$class_id = 6;
-		$section_id = 22;
-         $subject_id = 129;
-
-		$teacher_id = 35;
-		$column_name = 'marks';
-		$value = 1;
-
-        // Debug: Print input values
-    echo "Class ID: " . $class_id . "<br>";
-    echo "Section ID: " . $section_id . "<br>";
-    echo "Teacher ID: " . $teacher_id . "<br>";
-    echo "Subject ID: " . $subject_id . "<br>";
-    echo "Column Name: " . $column_name . "<br>";
-    echo "Value: " . $value . "<br>";
+		$class_id = html_escape($this->input->post('class_id'));
+		$section_id = html_escape($this->input->post('section_id'));
+		$teacher_id = html_escape($this->input->post('teacher_id'));
+		$subject_id = html_escape($this->input->post('subject_id'));
+		$column_name = html_escape($this->input->post('column_name'));
+		$value = html_escape($this->input->post('value'));
 
 		$check_row = $this->db->get_where('teacher_permissions', array('class_id' => $class_id, 'section_id' => $section_id, 'teacher_id' => $teacher_id, 'subject_id' => $subject_id));
 		if($check_row->num_rows() > 0){
