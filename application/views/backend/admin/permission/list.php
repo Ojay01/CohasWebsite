@@ -13,9 +13,9 @@
 			$school_id = school_id();
 			$teachers = $this->db->get_where('teachers', array('school_id' => $school_id))->result_array();
 			foreach($teachers as $teacher){
-                $permission = $this->db->get_where('teacher_permissions', array('teacher_id' => $teacher['id'], 'class_id' => $class_id, 'section_id' => $section_id))->row_array();
+                $permission = $this->db->get_where('teacher_permissions', array('teacher_id' => $teacher['id'], 'class_id' => $class_id, 'section_id' => $section_id, 'subject_id' => $subject_id))->row_array();
 		?>
-		<tr>
+        
             <td><?php echo $this->db->get_where('users', array('id' => $teacher['user_id']))->row('name'); ?></td>
             <td>
                 <input type="checkbox" value="<?php echo $permission['marks']; ?>" id="<?php echo $teacher['id'].'1'; ?>" data-switch="success" onchange="togglePermission(this.id, 'marks', '<?php echo $teacher['id']; ?>')" <?php if($permission['marks'] == 1) echo 'checked'; ?>>

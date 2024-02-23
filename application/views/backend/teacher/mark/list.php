@@ -45,9 +45,17 @@ $check_permission = has_permission($class_id, $section_id, 'marks', $subject_id)
                   <?php endforeach; ?>
                 </tbody>
               </table>
-              <div class="text-center">
+              <?php
+$current_date = strtotime(date('Y-m-d')); 
+$submit = $exam_ending_date < $current_date;
+?>
+
+<?php if (!$submit): ?>
+    <div class="text-center">
         <button class="btn btn-success" onclick="submit_marks()"><?php echo get_phrase('submit'); ?></button>
     </div>
+<?php endif; ?>
+
             <?php else: ?>
               <?php include APPPATH.'views/backend/empty.php'; ?>
             <?php endif; ?>

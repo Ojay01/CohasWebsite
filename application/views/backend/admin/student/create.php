@@ -26,12 +26,12 @@
                         <span class="d-none d-lg-block"><?php echo get_phrase('bulk_student_admission'); ?></span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!--li class="nav-item">
                     <a href="<?php echo route('student/create/excel'); ?>" class="nav-link rounded-0 <?php if($aria_expand == 'excel') echo 'active'; ?>">
                         <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
                         <span class="d-none d-lg-block"><?php echo get_phrase('excel_upload'); ?></span>
                     </a>
-                </li>
+                </li-->
             </ul>
 
             <div class="tab-content">

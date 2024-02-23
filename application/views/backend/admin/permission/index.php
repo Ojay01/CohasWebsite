@@ -16,33 +16,51 @@
         <div class="card">
             <div class="row mt-3">
                 <div class="col-md-1"></div>
-                <div class="col-md-4">
+                <div class="col-md-2 mb-1">
                     <select name="class" id="class_id" class="form-control select2" data-toggle = "select2" onchange="classWiseSection(this.value)" required>
                         <option value=""><?php echo get_phrase('select_a_class'); ?></option>
                             <?php
                             $classes = $this->db->get_where('classes', array('school_id' => school_id()))->result_array();
                             $school_id = school_id();
                             foreach($classes as $class){
-                                $this->db->where('class_id', $class['id']);
+                                $this->db->where('class_id', $class['id']); 
                                 $this->db->where('school_id', $school_id);
                                 $total_student = $this->db->get('enrols');
                             ?>
-                            <option value="<?php echo $class['id']; ?>">
-                                <?php echo $class['name']; ?>
-                                <?php echo "(".$total_student->num_rows().")"; ?>
-                            </option>
+                                <option value="<?php echo $class['id']; ?>">
+                                    <?php echo $class['name']; ?>
+                                    <?php echo "(".$total_student->num_rows().")"; ?>
+                                </option>
                             <?php } ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2 mb-1">
                     <select name="section" id="section_id" class="form-control select2" data-toggle = "select2"  required>
                         <option value=""><?php echo get_phrase('select_a_section'); ?></option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-1">
+                    <select name="subject" id="subject_id" class="form-control select2" data-toggle = "select2" required>
+                        <option value=""><?php echo get_phrase('select_subject'); ?></option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-block btn-secondary" onclick="filter()" ><?php echo get_phrase('filter'); ?></button>
                 </div>
             </div>
+
+            <div class="row">
+    <div class="col-md-4">
+        <strong>Selected Class ID:</strong> <span id="selected_class_id"></span>
+    </div>
+    <div class="col-md-4">
+        <strong>Selected Section ID:</strong> <span id="selected_section_id"></span>
+    </div>
+    <div class="col-md-4">
+        <strong>Selected Subject ID:</strong> <span id="selected_subject_id"></span>
+    </div>
+</div>
+
             <div class="card-body permission_content">
             	<div class="empty_box text-center">
                     <img class="mb-3" width="150px" src="<?php echo base_url('assets/backend/images/empty_box.png'); ?>" />
@@ -61,20 +79,36 @@
     });
 
     function classWiseSection(classId) {
-        $.ajax({
-            url: "<?php echo route('section/list/'); ?>"+classId,
-            success: function(response){
-                $('#section_id').html(response);
-            }
-        });
-    }
+    $.ajax({
+        url: "<?php echo route('section/list/'); ?>"+classId,
+        success: function(response){
+            $('#section_id').html(response);
+            classWiseSubject(classId);
+        }
+    });
+}
 
+function classWiseSubject(classId) {
+    $.ajax({
+        url: "<?php echo route('class_wise_subject/'); ?>"+classId,
+        success: function(response){
+            $('#subject_id').html(response);
+        }
+    });
+}
     function filter(){
         var class_id = $('#class_id').val();
         var section_id = $('#section_id').val();
-        if(class_id != "" && section_id!= ""){
+        var subject_id = $('#subject_id').val();
+    
+    // Display selected IDs
+    $('#selected_class_id').text(class_id);
+    $('#selected_section_id').text(section_id);
+    $('#selected_subject_id').text(subject_id);
+
+        if(class_id != "" && section_id!= "" && subject_id!= ""){
             $.ajax({
-                url: '<?php echo route('permission/filter/') ?>'+class_id+'/'+section_id,
+                url: '<?php echo route('permission/filter/') ?>'+class_id+'/'+section_id+'/'+subject_id,
                 success: function(response){
                     $('.permission_content').html(response);
                 }

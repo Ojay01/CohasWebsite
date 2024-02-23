@@ -72,12 +72,12 @@
                     <option value=""><?php echo get_phrase('select_gender'); ?></option>
                     <option value="Male"><?php echo get_phrase('male'); ?></option>
                     <option value="Female"><?php echo get_phrase('female'); ?></option>
-                    <option value="Others"><?php echo get_phrase('others'); ?></option>
+                  
                 </select>
             </div>
         </div>
         
-        <div class="form-group row mb-3">
+        <!--div class="form-group row mb-3">
             <label class="col-md-3 col-form-label" for="blood_group"><?php echo get_phrase('blood_group'); ?></label>
             <div class="col-md-9">
                 <select name="blood_group" id="blood_group" class="form-control select2" data-toggle = "select2"  required>
@@ -92,7 +92,7 @@
                     <option value="o-">O-</option>
                 </select>
             </div>
-        </div>
+        </div-->
 
         <div class="form-group row mb-3">
             <label class="col-md-3 col-form-label" for="example-textarea"><?php echo get_phrase('address'); ?></label>
@@ -101,12 +101,12 @@
             </div>
         </div>
 
-        <div class="form-group row mb-3">
+        <!--div class="form-group row mb-3">
             <label class="col-md-3 col-form-label" for="phone"><?php echo get_phrase('phone'); ?></label>
             <div class="col-md-9">
                 <input type="text" id="phone" name="phone" class="form-control" placeholder="phone" required>
             </div>
-        </div>
+        </div-->
 
         <div class="form-group row mb-3">
             <label class="col-md-3 col-form-label" for="example-fileinput"><?php echo get_phrase('student_profile_image'); ?></label>

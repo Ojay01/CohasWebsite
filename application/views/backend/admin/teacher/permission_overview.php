@@ -21,6 +21,12 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><?php echo get_phrase('subject'); ?></td>
+                            <td>
+                                <?php echo $this->db->get_where('subjects', array('id' => $teacher_permission['subject_id']))->row('name'); ?>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><?php echo get_phrase('marks'); ?></td>
                             <td>
                                 <i class="mdi mdi-circle text-<?php if($teacher_permission['marks'] == 1){echo 'success';}else{echo 'danger';} ?>"></i>

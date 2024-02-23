@@ -281,17 +281,19 @@ class Admin extends CI_Controller
 
 
 	//START TEACHER PERMISSION section
-	public function permission($param1 = '', $param2 = '', $param3 = ''){
+	public function permission($param1 = '', $param2 = '', $param3 = '', $param4 = ''){
 
 		if($param1 == 'filter'){
 			$page_data['class_id'] = $param2;
 			$page_data['section_id'] = $param3;
+			$page_data['subject_id'] = $param4;
 			$this->load->view('backend/admin/permission/list', $page_data);
 		}
 
 		if($param1 == 'modify_permission'){
 			$page_data['class_id'] = htmlspecialchars($this->input->post('class_id'));
 			$page_data['section_id'] = htmlspecialchars($this->input->post('section_id'));
+			$page_data['subject_id'] = htmlspecialchars($this->input->post('subject_id'));
 			$this->user_model->teacher_permission();
 			$this->load->view('backend/admin/permission/list', $page_data);
 		}
