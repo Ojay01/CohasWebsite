@@ -1278,5 +1278,7 @@
     "grade_updated_successfully": "Grade updated successfully",
     "session_has_been_updated_successfully": "Session has been updated successfully",
     "s/n": "S/n",
-    "subject_has_been_updated_successfully": "Subject has been updated successfully"
+    "subject_has_been_updated_successfully": "Subject has been updated successfully",
+    "the_principal": "The principal",
+    "affiliates": "Affiliates"
 }

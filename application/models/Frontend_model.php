@@ -383,6 +383,33 @@ class Frontend_model extends CI_Model {
     return json_encode($response);
   }
 
+  // update lab images
+  function update_lab_slider() {
+    $lab_images_json = get_frontend_settings('lab_images');
+    $lab_images = json_decode($lab_images_json);
+    $slider = array();
+    for ($i=0; $i < 5; $i++) {
+      $image = $current_images[$i]->image;
+      if ($_FILES['slider_image_'.$i]['name'] != '') {
+        $data['image']  = $_FILES['lab_image_'.$i]['name'];
+        move_uploaded_file($_FILES['lab_image_'.$i]['tmp_name'], 'uploads/images/lab/'. $data['image']);
+      } else {
+        $data['image']  = $image;
+      }
+      array_push($slider, $data);
+    }
+
+    $slider_data['lab_images']  = json_encode($slider);
+    $this->db->where('id', 1);
+    $this->db->update('frontend_settings', $slider_data);
+
+    $response = array(
+      'status' => true,
+      'notification' => get_phrase('updated')
+    );
+    return json_encode($response);
+  }
+
   // update general settings
   function update_frontend_general_settings() {
     $links = array();

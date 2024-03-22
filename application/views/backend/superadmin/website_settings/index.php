@@ -21,6 +21,7 @@
     <a href="<?php echo route('website_settings/terms_and_conditions'); ?>" class="btn <?php if ($page_content == 'terms_and_conditions'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1"><?php echo get_phrase('terms_and_conditions'); ?> <i class="mdi mdi-arrow-right float-end"></i></a>
     <a href="<?php echo route('website_settings/privacy_policy'); ?>" class="btn <?php if ($page_content == 'privacy_policy'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1"><?php echo get_phrase('privacy_policy'); ?> <i class="mdi mdi-arrow-right float-end"></i></a>
     <a href="<?php echo route('website_settings/homepage_slider'); ?>" class="btn <?php if ($page_content == 'homepage_slider'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1"><?php echo get_phrase('homepage_slider'); ?> <i class="mdi mdi-arrow-right float-end"></i></a>
+    <a href="<?php echo route('website_settings/lab_slider'); ?>" class="btn <?php if ($page_content == 'lab_slider'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1">Laboratory Slider <i class="mdi mdi-arrow-right float-end"></i></a>
     <a href="<?php echo route('website_settings/general_settings'); ?>" class="btn <?php if ($page_content == 'general_settings'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1"><?php echo get_phrase('general_settings'); ?> <i class="mdi mdi-arrow-right float-end"></i></a>
     <a href="<?php echo route('website_settings/other_settings'); ?>" class="btn <?php if ($page_content == 'other_settings'): ?> btn-dark <?php else: ?> btn-secondary <?php endif; ?> btn-rounded d-block mb-1"><?php echo get_phrase('others'); ?> <i class="mdi mdi-arrow-right float-end"></i></a>
   </div>
@@ -66,6 +67,13 @@ function updateTermsAndConditionSettings() {
 function updateHomepageSliderSettings() {
   $(".homepageSliderSettings").validate({});
   $(".homepageSliderSettings").submit(function(e) {
+    var form = $(this);
+    ajaxSubmit(e, form, reload);
+  });
+}
+function updateLabSliderSettings() {
+  $(".labSliderSettings").validate({});
+  $(".labSliderSettings").submit(function(e) {
     var form = $(this);
     ajaxSubmit(e, form, reload);
   });

@@ -1231,6 +1231,9 @@ class Superadmin extends CI_Controller {
     if ($param1 == 'homepage_slider') {
       $page_data['page_content']  = 'homepage_slider';
     }
+    if ($param1 == 'lab_slider') {
+      $page_data['page_content']  = 'lab_slider';
+    }
     if ($param1 == 'gallery_image') {
       $page_data['page_content']  = 'gallery_image';
       $page_data['gallery_id']  = $param2;
